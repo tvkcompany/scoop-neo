@@ -1,0 +1,24 @@
+{
+    "version": "0.1.0",
+    "description": "Neo CLI",
+    "homepage": "https://tvk.company",
+    "license": "Proprietary",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/tvkcompany/neo_cli/releases/download/0.1.0/neo_cli_0_1_0_windows_amd64.tar.gz",
+            "hash": "HASH_PLACEHOLDER"
+        }
+    },
+    "bin": "neo.exe",
+    "checkver": {
+        "github": "https://github.com/tvkcompany/scoop-neo",
+        "regex": "\"version\":\\s*\"([\\d.]+)\""
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/tvkcompany/neo_cli/releases/download/$version/neo_cli_$underscoreVersion_windows_amd64.tar.gz"
+            }
+        }
+    }
+}
