@@ -1,25 +1,24 @@
 {
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "Neo CLI",
     "homepage": "https://tvk.company",
     "license": "Proprietary",
     "architecture": {
         "64bit": {
-            "url": "https://api.github.com/repos/tvkcompany/neo_cli/releases/assets/229106156",
-            "headers": {
-                "Accept": "application/octet-stream",
-                "Authorization": "$gh_token"
-            },
-            "hash": "9083c5fe0ac416ba6ac8963ef4402bbf2ccddae2a69f6bd3d9f8796fba386302"
+            "url": "https://github.com/tvkcompany/neo_cli/releases/download/0.1.2/neo_cli_0_1_2_windows_amd64.zip",
+            "hash": "a631ae596a78dbf3f09c2230191cb3da799eb7a5169a79b08253f15239a2ec01"
         }
     },
-    "pre_install": [
-        "Rename-Item \"$dir\\*\" \"$dir\\download.tar.gz\"",
-        "tar.exe -xf \"$dir\\download.tar.gz\" -C \"$dir\"",
-        "Remove-Item \"$dir\\download.tar.gz\""
-    ],
     "bin": "neo.exe",
     "checkver": {
-        "github": "https://github.com/tvkcompany/neo_cli"
+        "url": "https://raw.githubusercontent.com/tvkcompany/scoop-neo/main/bucket/neo.json",
+        "jsonpath": "$.version"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/tvkcompany/neo_cli/releases/download/$version/neo_cli_$underscoreVersion_windows_amd64.zip"
+            }
+        }
     }
 }
