@@ -1,0 +1,43 @@
+name: Test Scoop Manifest
+
+on:
+  pull_request:
+    branches:
+      - production
+    paths:
+      - "bucket/neo.json"
+
+jobs:
+  test-manifest:
+    name: Test Scoop Manifest Installation
+    runs-on: windows-latest
+    steps:
+      - name: Set up Scoop
+        run: |
+          # Set execution policy to allow Scoop installation
+          Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+          # Install Scoop using the official method
+          Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+
+          # Add Scoop to PATH for the rest of the workflow
+          echo "$env:USERPROFILE\scoop\shims" >> $env:GITHUB_PATH
+
+      - name: Install Neo CLI
+        run: |
+          scoop bucket add neo https://github.com/tvkcompany/scoop-neo.git
+          scoop install neo
+
+      - name: Test Neo CLI
+        run: |
+          # Test that neo is installed and working
+          neo -v
+
+          # Capture the output for the PR comment
+          echo "Neo CLI version: $(neo -v)" >> $env:GITHUB_STEP_SUMMARY
+
+      - name: Clean up
+        if: always()
+        run: |
+          scoop uninstall neo
+          scoop bucket rm neo
